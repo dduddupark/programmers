@@ -1,0 +1,33 @@
+public int[] solution(int[] array, int[][] commands) {
+        int[] answer = {};
+
+        int size = commands.length;
+
+        int[][] middle = new int[size][];
+
+        for (int i = 0; i < size; i++) {
+
+            int index = 0;
+
+            middle[i] = new int[(commands[i][1]-commands[i][0])+1];
+
+            for (int j = commands[i][0]; j < (commands[i][1]+1); j++) {
+                middle[i][index++] = array[j-1];
+                System.out.print(array[j-1]);
+            }
+
+            System.out.println();
+        }
+
+        answer = new int[size];
+
+        for (int i=0; i<size; i++) {
+
+            Arrays.sort(middle[i]);
+
+            answer[i] = middle[i][(commands[i][2])-1];
+        }
+
+
+        return answer;
+    }
