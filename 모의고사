@@ -1,0 +1,51 @@
+public int[] solution(int[] answers) {
+
+        int[] answer = {};
+
+        int[] one = {1, 2, 3, 4, 5};
+        int[] two = {2, 1, 2, 3, 2, 4, 2, 5};
+        int[] three = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+
+        int[][] student = {one, two, three};
+
+        int[] answerCount = {0, 0, 0};
+
+        int studentSize = student.length;
+        for (int k = 0; k < studentSize; k++) {
+
+            int length = student[k].length;
+
+            int i = 0;
+            for (int value : answers) {
+                if (value == student[k][i++ % length]) {
+                    answerCount[k]++;
+                }
+
+            }
+        }
+
+        int a = answerCount[0];
+        int b = answerCount[1];
+        int c = answerCount[2];
+
+        ArrayList<Integer> maxList = new ArrayList<>();
+        int max = (a >= b) ? a : b;
+
+        if (c > max) {
+            max = c;
+        }
+
+        int answerSize = answerCount.length;
+        for (int i=0; i<answerSize; i++) {
+            if (max == answerCount[i])
+                maxList.add(i);
+        }
+
+        int maxListSize = maxList.size();
+        answer = new int[maxListSize];
+        for (int i=0; i<maxListSize; i++) {
+            answer[i] = maxList.get(i)+1;
+        }
+
+        return answer;
+    }
