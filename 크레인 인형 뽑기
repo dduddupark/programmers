@@ -1,0 +1,50 @@
+ public int solution(int[][] board, int[] moves) {
+ 
+        int popItemCount = 0;
+
+        if(moves != null)  {
+            int movesTotalSize = moves.length;
+
+            Stack<Integer> result = new Stack();
+
+            if (board != null) {
+
+                int boardSize = board.length;
+
+                for (int k=0; k<movesTotalSize; k++) {
+
+                    //뽑을 열
+                    int pickColumn = moves[k]-1;
+
+                    for (int i=0; i<boardSize; i++) {
+                        int pickItem = board[i][pickColumn];
+
+                        if (pickItem == 0) {
+                            continue;
+                        } else {
+                            if (result.isEmpty()) {
+                                result.push(pickItem);
+                            } else {
+
+                                if (pickItem == result.peek()) {
+                                    //result 마지막 item 삭제
+                                    result.pop();
+
+                                    popItemCount = popItemCount + 2;
+
+                                } else {
+                                    result.push(pickItem);
+                                }
+                            }
+
+                            board[i][pickColumn] = 0;
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return popItemCount;
+    }
