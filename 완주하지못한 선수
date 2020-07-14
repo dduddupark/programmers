@@ -1,0 +1,76 @@
+public String solution(String[] participant, String[] completion) {
+       String answer = "";
+      
+        Arrays.sort(participant);
+        Arrays.sort(completion);
+
+        ArrayList<String> participantList = new ArrayList<String>(Arrays.asList(participant));
+        ArrayList<String> completionList = new ArrayList<String>(Arrays.asList(completion));
+
+          if (completionList.isEmpty()) {
+            answer = participantList.get(0);
+        }
+
+        for (int i=0; i<completionList.size(); i++) {
+            if (!participantList.get(i).equals(completionList.get(i))) {
+               answer = participantList.get(i);
+                break;
+            }
+        }
+        
+        if (answer.equals("")) {
+            answer = participantList.get(participantList.size()-1);
+        }
+        return answer;
+    }
+
+
+==> hash를 사용하여 3배 더 빠르게 변경
+
+ public String solution(final String[] participant, String[] completion) {
+
+        String answer = "";
+
+        HashMap<String, Integer> hashMap = new HashMap();
+
+        int participantSize = participant.length;
+        for (int i=0; i<participantSize; i++) {
+            if (hashMap.containsKey(participant[i])) {
+                Integer value = hashMap.get(participant[i]);
+                hashMap.put(participant[i], new Integer(value.intValue())+1);
+            } else {
+                hashMap.put(participant[i], new Integer(1));
+            }
+        }
+
+        int completionSize = completion.length;
+
+        if (completionSize == 0) {
+            answer = participant[0];
+        } else {
+
+            for (int i=0; i<completionSize; i++) {
+                if (hashMap.containsKey(completion[i])) {
+
+                    Integer value = hashMap.get(completion[i]);
+                    hashMap.put(completion[i], new Integer(value.intValue()-1));
+
+                    if (hashMap.get(completion[i]) == 0)
+                        hashMap.remove(completion[i]);
+                }
+            }
+
+            Iterator it = hashMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry entry = (Map.Entry)it.next();
+                answer = (String) entry.getKey();
+                break;
+            }
+
+            if (answer.equals("")) {
+                answer = participant[participant.length-1];
+            }
+        }
+
+        return answer;
+    }
